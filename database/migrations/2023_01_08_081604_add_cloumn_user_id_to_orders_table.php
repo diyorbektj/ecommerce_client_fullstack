@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('favorites', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('guid')->default(999999);
-            $table->unsignedBigInteger('product_id');
-            $table->timestamps();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->bigInteger('user_id');
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favorites');
+        Schema::table('orders', function (Blueprint $table) {
+            //
+        });
     }
 };

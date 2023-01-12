@@ -26,6 +26,6 @@ class FavoriteRepository implements \App\Interfaces\FavoriteInterface
 
     public function show()
     {
-        return Favorit::query()->where('user_id', auth('sanctum')->id())->with('product')->get();
+        return Favorit::query()->where('guid', request()->guid)->with('product')->get();
     }
 }

@@ -171,13 +171,14 @@ export default {
             text: "",
             loggined: false,
             quantity: 1,
+            guid: localStorage.getItem('guid')
         }
     },
     created() {
         axios.get("/api/auth/logined").then(res => {
             this.loggined = res.data.message
         })
-        axios.get('/api/product/' + this.$route.params.id)
+        axios.get('/api/product/' + this.$route.params.id + '?guid='+this.guid)
             .then(response => {
                 this.product = response.data.data;
                 console.log(CryptoJS.MD5(this.product.name).toString())
@@ -185,12 +186,12 @@ export default {
             .catch(error => {
                 console.log(error);
             });
-        axios.get('/api/product').then(response =>{
+        axios.get('/api/product?guid='+this.guid).then(response =>{
                 this.products = response.data.data.slice(0,9);
             }).catch(error =>{
                 console.log(error)
             })
-        axios.get('/api/comments/get/' + this.$route.params.id).then(response =>{
+        axios.get('/api/comments/get/' + this.$route.params.id+'?guid='+this.guid).then(response =>{
             this.comments = response.data.data;
         }).catch(error =>{
             console.log(error)
@@ -198,14 +199,14 @@ export default {
     },
     methods: {
         BuyProduct(id) {
-            axios.get("/api/order/buyproduct/" + CryptoJS.MD5(id)).then(res => {
+            axios.get("/api/order/buyproduct/" + CryptoJS.MD5(id) + '?guid='+this.guid).then(res => {
                 this.$store.dispatch('INCREMENT_QUANTITY', this.quantity)
                 router.push(`/buyproduct/${CryptoJS.MD5(this.$route.params.id)}`)
             })
         },
         AddComment()
         {
-            axios.post('/api/comments/add/' + this.$route.params.id, {text: this.text})
+            axios.post('/api/comments/add/' + this.$route.params.id + '?guid='+this.guid, {text: this.text})
                 .then(response =>{
                 this.comments.push(response.data.data);
                 this.text = ""
@@ -216,7 +217,7 @@ export default {
         },
         LikeToComment(id)
         {
-            axios.post('/api/comments/like/'+id).then(response => {
+            axios.post('/api/comments/like/'+id + '?guid='+this.guid).then(response => {
                 alert("Liked")
             }).catch(error =>{
                 console.log(error)

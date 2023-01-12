@@ -71,13 +71,12 @@ export const routes = [
         name: 'myfavorites',
         path: '/myfavorites',
         component: Favorites,
-        beforeEnter: [loggedIn]
+        // beforeEnter: [loggedIn]
     },
     {
         name: 'mybasket',
         path: '/mybasket',
-        component: Basket,
-        beforeEnter: [loggedIn]
+        component: Basket
     },
     {
         name: 'buyproduct',

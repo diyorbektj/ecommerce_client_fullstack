@@ -35,19 +35,20 @@ export default {
         return{
             user: {},
             address: {},
-            token: localStorage.getItem('token')
+            token: localStorage.getItem('token'),
+            guid: localStorage.getItem('guid')
         }
     },
     created() {
         window.axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
         axios.get('/sanctum/csrf-cookie').then(response => {
-            axios.get('/api/users/profile')
+            axios.get('/api/users/profile?guid='+this.guid)
                 .then(response => {
                     this.user = response.data.data;
                     this.logined = response.data.logined
                 });
         })
-        axios.get('/api/addresses/get')
+        axios.get('/api/addresses/get?guid='+this.guid)
             .then(response => {
                 this.address = response.data.data;
             });

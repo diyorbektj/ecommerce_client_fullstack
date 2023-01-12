@@ -20,7 +20,7 @@ class ProductResource extends JsonResource
             'name' => Str::limit($this->name, 150),
             'price' => $this->price,
             'quantity' => $this->quantity,
-            'status' => $this->status,
+            'status' => $this->status_id,
             'view' => $this->view,
             'image' => $this->image->path ?? null,
             'created_at' => $this->created_at,

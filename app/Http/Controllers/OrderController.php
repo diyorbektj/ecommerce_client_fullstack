@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductOrdersResource;
+use App\Models\Address;
 use App\Models\Basket;
 use App\Models\Order;
 use App\Models\Product;
@@ -42,11 +43,21 @@ class OrderController extends Controller
     {
         $user = auth('sanctum')->user();
         $order = Order::query()->create([
-            'user_name' => auth()->user()->first_name,
-            'user_phone' => '+992987722178',
+            'user_name' => $request->fullname ?? $user->first_name,
+            'user_phone' => $request->phone ?? '+992987722178',
             'total_price' => $request->total_price,
-            'user_id' => $user->id,
-            'status' => 'pending',
+            'user_id' => $user->id ?? 1,
+            'guid' => $request->guid,
+            'status_id' => 1,
+        ]);
+        $address = Address::query()->create([
+            'user_id' => auth('sanctum')->id() ?? null,
+            'guid' => $request->guid,
+            'fullname' => $request->fullname,
+            'phone_number' => $request->phone_number,
+            'country' => "Tajikistan",
+            'city' => $request->city,
+            'street' => $request->street,
         ]);
         $products = [];
         foreach ($request->products as $product) {
@@ -109,7 +120,7 @@ class OrderController extends Controller
 
         if ($hash == md5('basket')) {
             $amount = 0;
-            $baskets = Basket::query()->where('user_id', auth('sanctum')->id())->get();
+            $baskets = Basket::query()->where('guid', $request->guid)->get();
             foreach ($baskets as $basket) {
                 $amounts = $basket->price * $basket->quantity;
                 $amount += $amounts;
@@ -120,7 +131,8 @@ class OrderController extends Controller
             return response()->json([
                 'data' => [
                     ['product_id' => $product->id,
-                        'user_id' => auth('sanctum')->id(),
+                        'user_id' => auth('sanctum')->id() ?? null,
+                        'guid' => $request->guid,
                         'product_name' => $product->name,
                         'product_image' => $product->image->path,
                         'quantity' => $request->quantity,

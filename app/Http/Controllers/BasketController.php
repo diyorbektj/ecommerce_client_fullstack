@@ -35,18 +35,22 @@ class BasketController extends Controller
      */
     public function store(Request $request)
     {
-        $basket = Basket::query()->where('product_id', $request->id)->first();
+        $basket = Basket::query()
+            ->where('guid', \request()->guid)
+            ->where('product_id', $request->id)
+            ->first();
         if ($basket) {
             $basket->increment('quantity');
         } else {
             $product = Product::with('image')->find($request->id);
             $basket = Basket::query()->create([
                 'product_id' => $product->id,
-                'user_id' => auth('sanctum')->id(),
+                'user_id' => auth('sanctum')->id() ?? null,
                 'product_name' => $product->name,
                 'product_image' => $product->image->path,
                 'quantity' => 1,
                 'price' => $product->price,
+                'guid' => $request->guid
             ]);
         }
 
@@ -61,7 +65,7 @@ class BasketController extends Controller
      */
     public function show(Basket $basket)
     {
-        return response()->json($basket->where('user_id', auth('sanctum')->id())->get());
+        return response()->json($basket->where('guid', \request()->guid)->get());
     }
 
     /**

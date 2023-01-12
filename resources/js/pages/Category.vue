@@ -73,10 +73,11 @@ export default {
             products: [],
             count: 16,
             filter: false,
+            guid: localStorage.getItem('guid')
         }
     },
     created() {
-        axios.get(`/api/category/products/${this.$route.params.id}`)
+        axios.get(`/api/category/products/${this.$route.params.id}?guid=${this.guid}`)
             .then(response => {
                 this.products = response.data.data;
             })

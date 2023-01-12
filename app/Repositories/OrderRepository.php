@@ -14,7 +14,7 @@ class OrderRepository implements \App\Interfaces\OrderInterface
 
     public function allOrders()
     {
-        return Order::query()->orderByDesc('created_at')->get();
+        return Order::query()->orderByDesc('created_at')->with('status')->get();
     }
 
     public function getOrder(int $id)

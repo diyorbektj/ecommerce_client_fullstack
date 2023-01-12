@@ -44,10 +44,14 @@ class FavoritController extends Controller
      */
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        $favorite = Favorit::query()->where('product_id', $request->product_id)->first();
-        if (! $favorite) {
+        $favorite = Favorit::query()
+            ->where('guid', $request->guid)
+            ->where('product_id', $request->product_id)
+            ->first();
+        if (!$favorite) {
             $favorite = Favorit::query()->create([
-                'user_id' => auth('sanctum')->id(),
+                'guid' => $request->guid ?? 'test',
+                'user_id' => auth('sanctum')->id() ?? null,
                 'product_id' => $request->product_id,
             ]);
         }
@@ -61,11 +65,11 @@ class FavoritController extends Controller
      * @param  \App\Models\Favorit  $favorit
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function show($get)
+    public function show()
     {
         $favorites = $this->favoriteRepository->show();
 
-        return $get == 1 ? response()->json($favorites) : FavoritesResource::collection($favorites);
+        return FavoritesResource::collection($favorites);
     }
 
     /**
@@ -99,7 +103,7 @@ class FavoritController extends Controller
      */
     public function destroy(Favorit $favorit)
     {
-        $favorit->query()->where('user_id', auth('sanctum')->id())->delete();
+        $favorit->query()->where('guid', \request()->guid)->delete();
 
         return response()->json('Deleted!!!');
     }

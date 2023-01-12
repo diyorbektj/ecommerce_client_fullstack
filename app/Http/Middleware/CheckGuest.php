@@ -18,11 +18,11 @@ class CheckGuest
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!$request->has('guid')){
-            Guest::query()->create([
-                'guid' => CreateGUIDService::generate()
-            ]);
-        }
+//        if(!$request->has('guid')){
+//            Guest::query()->create([
+//                'guid' => CreateGUIDService::generate()
+//            ]);
+//        }
         return $next($request);
     }
 }

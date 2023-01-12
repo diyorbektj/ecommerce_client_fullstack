@@ -35,7 +35,7 @@ Route::controller(ProductController::class)->prefix('product')->group(function (
     Route::get('/{id}', 'show');
 });
 
-Route::controller(OrderController::class)->middleware('auth:sanctum')->prefix('order')->group(function () {
+Route::controller(OrderController::class)->prefix('order')->group(function () {
     Route::get('/', 'index');
     Route::post('/store', 'store');
     Route::put('/user/{id}', 'update');
@@ -65,13 +65,13 @@ Route::controller(ProductCommentsController::class)->prefix('comments')->group(f
     Route::get('/get/{id}', 'show');
 });
 
-Route::controller(\App\Http\Controllers\FavoritController::class)->middleware('auth:sanctum')->prefix('favorite')->group(function () {
+Route::controller(\App\Http\Controllers\FavoritController::class)->prefix('favorite')->group(function () {
     Route::get('/create', 'store');
-    Route::get('/get/{get}', 'show');
+    Route::get('/get', 'show');
     Route::delete('/clean_favorite', 'destroy');
 });
 
-Route::controller(\App\Http\Controllers\BasketController::class)->prefix('basket')->middleware('auth:sanctum')->group(function () {
+Route::controller(\App\Http\Controllers\BasketController::class)->prefix('basket')->group(function () {
     Route::get('/create', 'store');
     Route::get('/get', 'show');
     Route::get('/decrement', 'decrement');
@@ -95,7 +95,4 @@ Route::controller(\App\Http\Controllers\SubCategoryController::class)->prefix('s
     Route::delete('/{id}', 'destroy');
 });
 
-Route::get("/generate-guid", function (){
-    $guid = \App\Services\CreateGUIDService::generate();
-    return response()->json(["guid" => $guid]);
-});
+Route::get("/generate-guid", [\App\Http\Controllers\GuidController::class, 'generate']);

@@ -70,12 +70,13 @@ export default {
     data(){
         return{
             orders: [],
-            token: localStorage.getItem('token')
+            token: localStorage.getItem('token'),
+            guid: localStorage.getItem('guid')
         }
     },
     created() {
         window.axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
-        axios.get('/api/order/myorders')
+        axios.get('/api/order/myorders?guid='+this.guid)
             .then(response => {
                 this.orders = response.data;
             });

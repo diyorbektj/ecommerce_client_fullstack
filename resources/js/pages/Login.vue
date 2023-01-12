@@ -41,11 +41,12 @@ export default {
         return {
             email: "",
             password: "",
+            guid: localStorage.getItem('guid')
         }
     },
     methods: {
         login() {
-            axios.post("/api/auth/login", {
+            axios.post("/api/auth/login?guid="+this.guid, {
                 email: this.email,
                 password: this.password,
             }).then(response => {

@@ -125,13 +125,14 @@ export default {
             category: null,
             products: [],
             filter: false,
-            token: localStorage.getItem('token')
+            token: localStorage.getItem('token'),
+            guid: localStorage.getItem('guid')
         }
     },
     created() {
         axios.get('/sanctum/csrf-cookie').then(response => {
             window.axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
-            axios.get('/api/favorite/get/2')
+            axios.get('/api/favorite/get?guid='+this.guid)
                 .then(response => {
                     for (var i = 0; i < response.data.data.length; i++) {
                         this.products.push(response.data.data[i].product);
@@ -162,7 +163,7 @@ export default {
     },
     methods:{
         filterProducts() {
-            axios.get('/api/product/filter', {params: {order_type: this.order_type, price_min: this.min, price_max: this.max, color: this.color, category_id: this.category}})
+            axios.get('/api/product/filter?guid='+this.guid, {params: {order_type: this.order_type, price_min: this.min, price_max: this.max, color: this.color, category_id: this.category}})
                 .then(res => this.products = res.data.data)
                 .catch(error => {
                     console.log(error)

@@ -12,6 +12,7 @@ class Favorit extends Model
     protected $table = 'favorites';
 
     protected $fillable = [
+        'guid',
         'user_id',
         'product_id',
     ];

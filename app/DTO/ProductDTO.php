@@ -21,10 +21,6 @@ class ProductDTO
     {
         $images = [];
         foreach ($data as $image) {
-            if (file_exists($image)) {
-                unlink($image);
-                continue;
-            }
             $imageName = $image->getClientOriginalName();
             $path = $image->move(public_path('images'), $imageName);
             $images[] = ['name' => $imageName, 'path' => '/images/'.$imageName, 'product_id' => $id, 'created_at' => now(), 'updated_at' => now()];

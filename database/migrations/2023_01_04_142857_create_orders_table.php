@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('user_name')->nullable();
             $table->string('user_phone')->nullable();
             $table->double('total_price',8,2)->nullable();
-            $table->unsignedBigInteger('status')->default(1);
+            $table->unsignedBigInteger('status_id')->default(1);
             $table->timestamps();
         });
     }

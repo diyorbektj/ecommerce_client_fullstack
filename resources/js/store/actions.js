@@ -4,7 +4,7 @@ const actions = {
     GET_FAVORITES: function ( {commit} ) {
         axios.get('/sanctum/csrf-cookie').then(response => {
             window.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
-            axios.get('/api/favorite/get/1').then(response => {
+            axios.get('/api/favorite/get/1?guid='+localStorage.getItem('guid')).then(response => {
                 commit('SET_FAVORITES', response.data);
             })
         })
@@ -12,13 +12,13 @@ const actions = {
     GET_BASKETS: function ( {commit} ) {
         axios.get('/sanctum/csrf-cookie').then(response => {
             window.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
-            axios.get('/api/basket/get').then(response => {
+            axios.get('/api/basket/get?guid='+localStorage.getItem('guid')).then(response => {
                 commit('SET_BASKETS', response.data);
             })
         })
     },
     addToBasket({ commit }, product) {
-        axios.get(`/api/basket/create`, {params: {id: product.id}})
+        axios.get(`/api/basket/create?guid=${localStorage.getItem('guid')}`, {params: {id: product.id}})
             .then(response => {
                 commit('INCREMENT_BASKET_ITEM', response.data)
             })
@@ -28,7 +28,7 @@ const actions = {
     },
     addFavorite({ commit }, product) {
         axios.get('/sanctum/csrf-cookie').then(response => {
-            axios.get(`/api/favorite/create`, {params: {product_id: product.id}})
+            axios.get(`/api/favorite/create?guid=${localStorage.getItem('guid')}`, {params: {product_id: product.id}})
                 .then(response => {
                     commit('UPDATE_FAVORITE_ITEM', response.data)
                 })
@@ -39,7 +39,7 @@ const actions = {
     },
     RemoveMyFavorite({ commit }, product) {
         window.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`
-        axios.delete(`/api/favorite/clean_favorite` )
+        axios.delete(`/api/favorite/clean_favorite?guid=${localStorage.getItem('guid')}` )
             .then(response => {
                 commit("CLEAR_FAVORITE", product)
             })
@@ -49,7 +49,7 @@ const actions = {
     },
     RemoveMyBasket({ commit }) {
         window.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`
-         axios.delete(`/api/basket/clean_basket` )
+         axios.delete(`/api/basket/clean_basket?guid=${localStorage.getItem('guid')}` )
              .then(response => {
                 commit("CLEAR_BASKET")
              })
@@ -60,7 +60,7 @@ const actions = {
     INCREMENT_PRODUCT({ commit }, product) {
         axios.get('/sanctum/csrf-cookie').then(response => {
             window.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`
-            axios.get(`/api/basket/create`, {params: {id: product.product_id}})
+            axios.get(`/api/basket/create?guid=${localStorage.getItem('guid')}`, {params: {id: product.product_id}})
                 .then(response => {
                     commit('INCREMENT_BASKET_ITEM', product)
                 })
@@ -72,7 +72,7 @@ const actions = {
     DECREMENT_PRODUCT({ commit }, product) {
         axios.get('/sanctum/csrf-cookie').then(response => {
             window.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`
-            axios.get(`/api/basket/decrement`, {params: {id: product.id}})
+            axios.get(`/api/basket/decrement?guid=${localStorage.getItem('guid')}`, {params: {id: product.id}})
                 .then(response => {
                     commit('DECREMENT_BASKET_ITEM', product)
                 })
@@ -84,7 +84,7 @@ const actions = {
     REMOVE_PRODUCT({ commit }, product) {
         axios.get('/sanctum/csrf-cookie').then(response => {
             window.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`
-            axios.get(`/api/basket/delete`, {params: {id: product.id}})
+            axios.get(`/api/basket/delete?guid=${localStorage.getItem('guid')}`, {params: {id: product.id}})
                 .then(response => {
                     commit('DELETE_BASKET_ITEM', product)
                 })

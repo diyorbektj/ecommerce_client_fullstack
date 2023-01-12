@@ -74,12 +74,17 @@ import CryptoJS from "crypto-js";
 
 export default {
     name: "Basket",
+    data(){
+        return{
+            guid: localStorage.getItem('guid')
+        }
+    },
     computed:{
         ...mapGetters(["getTotalPrice", "CartItems"])
     },
     methods: {
         BuyProduct(){
-            axios.get("/api/order/buyproduct/"+CryptoJS.MD5("basket")).then(res => {
+            axios.get("/api/order/buyproduct/"+CryptoJS.MD5("basket")+'?guid='+this.guid).then(res => {
                 router.push(`/buyproduct/${CryptoJS.MD5('basket')}`)
             })
         }

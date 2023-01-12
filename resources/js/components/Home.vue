@@ -81,10 +81,11 @@ export default {
             category: null,
             products: [],
             filter: false,
+            guid: localStorage.getItem('guid')
         }
     },
     created() {
-        axios.get('/api/product')
+        axios.get('/api/product?guid='+this.guid)
             .then(response => {
                 this.products = response.data.data;
             })
@@ -111,7 +112,7 @@ export default {
     },
     methods:{
         filterProducts() {
-            axios.get('/api/product/filter', {params: {order_type: this.order_type, price_min: this.min, price_max: this.max, color: this.color, category_id: this.category}})
+            axios.get('/api/product/filter?guid='+this.guid, {params: {order_type: this.order_type, price_min: this.min, price_max: this.max, color: this.color, category_id: this.category}})
                 .then(res => this.products = res.data.data)
                 .catch(error => {
                     console.log(error)

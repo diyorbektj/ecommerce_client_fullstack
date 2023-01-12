@@ -38,6 +38,7 @@ export default {
         return {
             scTimer: 0,
             scY: 0,
+            guid: localStorage.getItem('guid')
         }
     },
     created() {
@@ -46,8 +47,8 @@ export default {
     },
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
-        if (!localStorage.getItem('guid')){
-            axios.get('/api/generate-guid').then(response => {
+        if(!localStorage.getItem('guid')){
+            axios.get('/api/generate-guid?guid=' + localStorage.getItem('guid')).then(response => {
                 localStorage.setItem('guid', response.data.guid)
             }).catch(error => {
                 console.log(error)

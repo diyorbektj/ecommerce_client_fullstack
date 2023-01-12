@@ -45,12 +45,13 @@ export default {
         return{
             token: localStorage.getItem("token"),
             user: {},
+            guid: localStorage.getItem('guid')
         }
     },
     created() {
         window.axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
         axios.get('/sanctum/csrf-cookie').then(response => {
-            axios.get('/api/users/profile')
+            axios.get('/api/users/profile?guid='+this.guid)
                 .then(response => {
                     this.user = response.data.data;
                 });
