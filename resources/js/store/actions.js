@@ -4,7 +4,7 @@ const actions = {
     GET_FAVORITES: function ( {commit} ) {
         axios.get('/sanctum/csrf-cookie').then(response => {
             window.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
-            axios.get('/api/favorite/get/1?guid='+localStorage.getItem('guid')).then(response => {
+            axios.get('/api/favorite/get?guid='+localStorage.getItem('guid')).then(response => {
                 commit('SET_FAVORITES', response.data);
             })
         })

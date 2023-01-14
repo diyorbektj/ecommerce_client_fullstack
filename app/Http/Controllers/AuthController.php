@@ -52,7 +52,7 @@ class AuthController extends Controller
 
     public function logout(): \Illuminate\Http\JsonResponse
     {
-        auth()->user()->tokens->each(function ($token, $key) {
+        auth('sanctum')->user()->tokens->each(function ($token, $key) {
             $token->delete();
         });
 

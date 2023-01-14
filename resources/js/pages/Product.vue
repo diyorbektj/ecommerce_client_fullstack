@@ -1,5 +1,5 @@
 <template>
-    <main class="max-w-screen-xl mx-auto bg-white w-full h-auto m-8 p-8 rounded-md">
+    <main class="max-width mx-auto bg-white w-full h-auto m-8 p-8 rounded-md">
         <div class="flex justify-between">
             <div class="font-bold text-3xl m-4"><span class="text-green-600">{{ product.category.name }}</span> {{product.name}}</div>
             <div class="m-4 text-green-600">
@@ -9,8 +9,8 @@
             </div>
         </div>
 <div class="grid lg:grid-cols-2 md:grid-cols-1 max-w-4xl mx-auto pt-4">
-    <div class="md:mr-8 lg:p-4"><img :src="product.image" :alt="product.name"></div>
-        <div class="p-2">
+    <div class="md:mr-8 lg:p-4"><img class="img-product" :src="product.image" :alt="product.name"></div>
+        <div class="max-w-buttons" style="">
             <div class="font-bold text-xl lg:m-4">Смартфон {{product.name}}</div>
             <div>
                 <div class="grid grid-cols-2 pl-4 pb-2 border-b border-gray-300">
@@ -35,7 +35,7 @@
             </div>
                 </div>
 
-                <div class="flex justify-center m-2 lg:px-4">
+                <div class="flex justify-center">
                     <div class="mx-0.5">
                         <button @click="$store.dispatch('addFavorite', product)" class="bg-green-200 text-green-600 w-[13rem] h-12 m-2 rounded-md" form="">
                             <p class="flex justify-center items-center font-bold"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 pr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -104,10 +104,10 @@
                 <h1 class="font-bold text-2xl p-4">Rand Products</h1>
                 <div class="grid xl:grid-cols-3 lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 flex justify-center px-6">
 
-                    <div v-for="(product, index) in products" :key="index" class="mx-2 w-[15rem] sm:w-8 py-4 h-auto rounded-xl shadow-2xl shadow-green-400 hover:shadow-xl hover:shadow-green-300 my-8">
+                    <div v-for="(product, index) in products" :key="index" class="mx-2 w-[15rem] py-4 h-auto rounded-xl shadow-2xl shadow-green-400 hover:shadow-xl hover:shadow-green-300 my-8">
                         <router-link :to="'/product/' + product.id">
                             <div class="flex justify-center my-2">
-                                <img class="lg:w-32 lg:h-[10rem] md:w-28 sm:h-[6rem]" :src="product.image">
+                                <img class="w-32 h-auto" :src="product.image">
                             </div>
                             <div>
                                 <div class="text-md font-bold px-5 flex justify-between">
@@ -234,5 +234,24 @@ tr{
 }
 tr,td{
     padding: 0.65rem;
+}
+@media screen and (max-width: 1024px) {
+    .img-product{
+        width: 200px;
+    }
+    .max-width{
+    width: 450px;
+    }
+    .max-w-buttons{
+        max-width: 400px;
+    }
+}
+@media screen and (min-width: 1024px) {
+    .img-product{
+        width: 300px;
+    }
+    .max-width{
+        width: 1240px;
+    }
 }
 </style>

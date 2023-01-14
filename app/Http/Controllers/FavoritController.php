@@ -69,7 +69,7 @@ class FavoritController extends Controller
     {
         $favorites = $this->favoriteRepository->show();
 
-        return FavoritesResource::collection($favorites);
+        return response()->json(FavoritesResource::collection($favorites));
     }
 
     /**

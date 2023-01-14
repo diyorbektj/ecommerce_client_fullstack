@@ -36,6 +36,11 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
+    public function subcategory(): BelongsTo
+    {
+        return $this->belongsTo(SubCategory::class, 'subcategory_id', 'id');
+    }
+
     //get Product Attribute
     public function getProductAttribute()
     {

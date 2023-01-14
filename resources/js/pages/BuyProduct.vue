@@ -72,7 +72,7 @@
                     <div><label class="text-lg">Телефон:</label></div>
                     <input required type="text" v-model="address.phone_number" class="h-10 w-96 border border-gray-200 rounded-xl p-3 pr-8 bg-gray-100 focus:bg-white focus:outline-none text-black" placeholder="Телефон">
                 </div>
-                <button class="bg-green-600 w-auto h-auto p-2 rounded text-white">Оформить Заказ</button>
+                <button type="submit" class="bg-green-600 w-auto h-auto p-2 rounded text-white">Оформить Заказ</button>
             </div>
         </form>
     </main>

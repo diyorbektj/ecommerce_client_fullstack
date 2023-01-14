@@ -3,7 +3,7 @@
         <div class="flex justify-between max-w-screen-xl mx-auto text-[1.10rem]">
             <div class="flex items-center">
                 <router-link class="font-bold text-2xl py-3" to="/">Ecommerce</router-link>
-                <button class="bg-white flex items-center  text-green-600 p-1 ml-6 rounded" form="">
+                <button @click="catalog_func" class="bg-white flex items-center  text-green-600 p-1 ml-6 rounded" form="">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5" />
                     </svg>
@@ -100,7 +100,13 @@
                 </div>
             </div>
         </div>
+
     </header>
+    <div v-if="is_active" class="w-full h-auto bg-green-700 p-2 text-white">
+        <div class="max-w-screen-xl mx-auto">
+            <div class="py-2" v-for="item in categories" :key="item.id">{{item.name}}</div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -118,6 +124,7 @@ export default {
             profile: false,
             categories: [],
             user: [],
+            is_active: false,
             logined: false,
             token: localStorage.getItem('token'),
             guid: localStorage.getItem('guid')
@@ -155,6 +162,13 @@ export default {
                 .then(response => {
                     this.products = response.data.data
                 });
+        },
+        catalog_func(){
+            if(this.is_active === true){
+                this.is_active =false
+            }else {
+                this.is_active = true
+            }
         }
     }
 }

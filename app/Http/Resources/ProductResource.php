@@ -25,6 +25,7 @@ class ProductResource extends JsonResource
             'image' => $this->image->path ?? null,
             'created_at' => $this->created_at,
             'category' => $this->category,
+            'subcategory' => $this->subcategory,
             'subcategory_id' => $this->subcategory_id,
             'brand_id' => $this->brand_id,
             'attributes' => AttributeResource::collection($this->getProductAttribute),

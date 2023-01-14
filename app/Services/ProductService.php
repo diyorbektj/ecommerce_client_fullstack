@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\ProductAttributes;
 use App\Models\ProductOrders;
 use App\Repositories\ProductRepository;
+use Illuminate\Support\Facades\DB;
 
 class ProductService
 {
@@ -56,8 +57,8 @@ class ProductService
     }
     public function updateProduct(UpdateProductRequest $request, $id)
     {
-        DB::beginTransaction();
-            try {
+//        DB::beginTransaction();
+//            try {
                 $data = ProductDTO::toArray($request->validated());
                 $product = $this->productRepository->updateProduct($id, $data);
                 if ($request->hasFile('images')) {
@@ -72,9 +73,9 @@ class ProductService
                     ]);
                 }
                 return $product;
-        } catch (\Exception $ex) {
-            DB::rollback();
-            return response()->json(['error' => $ex->getMessage()], 500);
-        }
+//        } catch (\Exception $ex) {
+//            DB::rollback();
+//            return response()->json(['error' => $ex->getMessage()], 500);
+//        }
     }
 }

@@ -134,8 +134,8 @@ export default {
             window.axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
             axios.get('/api/favorite/get?guid='+this.guid)
                 .then(response => {
-                    for (var i = 0; i < response.data.data.length; i++) {
-                        this.products.push(response.data.data[i].product);
+                    for (var i = 0; i < response.data.length; i++) {
+                        this.products.push(response.data[i].product);
                     }
 
                 })
@@ -168,7 +168,7 @@ export default {
                 .catch(error => {
                     console.log(error)
                 });
-        }
+        },
     }
 }
 </script>

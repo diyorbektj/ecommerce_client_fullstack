@@ -51,6 +51,7 @@ class OrderController extends Controller
             'status_id' => 1,
         ]);
         $address = Address::query()->create([
+            'order_id' => $order->id,
             'user_id' => auth('sanctum')->id() ?? null,
             'guid' => $request->guid,
             'fullname' => $request->fullname,
@@ -79,12 +80,14 @@ class OrderController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function show($id): \Illuminate\Http\JsonResponse
     {
-        $order = $this->orderRepository->getOrder($id);
-        return ProductOrdersResource::collection($order);
+        return response()->json([
+            'data' => ProductOrdersResource::collection($this->orderRepository->getOrder($id)),
+            'address' => Address::query()->where('order_id', $id)->first() ?? null,
+        ]);
     }
 
     /**
