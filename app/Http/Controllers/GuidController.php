@@ -8,14 +8,15 @@ class GuidController extends Controller
 {
     public function generate(Request $request)
     {
-        if($guid = \App\Models\Guest::query()->where('guid', $request->guid ?? null)->first()){
+        if ($guid = \App\Models\Guest::query()->where('guid', $request->guid ?? null)->first()) {
             $guid = $guid->guid;
-        }else{
+        } else {
             $guid = \App\Services\CreateGUIDService::generate();
             \App\Models\Guest::query()->create([
-                'guid' => $guid
+                'guid' => $guid,
             ]);
         }
-        return response()->json(["guid" => $guid]);
+
+        return response()->json(['guid' => $guid]);
     }
 }
