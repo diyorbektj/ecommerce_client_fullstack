@@ -55,24 +55,26 @@ class ProductService
         //TelegramService::sendMessage(['chat_id' => -1001581996353, 'text' => "Новый продукт \nПродукт: ".$product->name."\nЦена: ".$product->price."\nКоличество: ".$product->quantity."\nСтатус: active\nДата: ".$product->created_at]);
         return $product;
     }
+
     public function updateProduct(UpdateProductRequest $request, $id)
     {
 //        DB::beginTransaction();
 //            try {
-                $data = ProductDTO::toArray($request->validated());
-                $product = $this->productRepository->updateProduct($id, $data);
-                if ($request->hasFile('images')) {
-                    $images = (new ProductDTO())->uploadImage($request->file('images'), $product->id);
-                    $product->images()->createMany($images);
-                }
-                foreach (json_decode($request->attribute) as $attribute) {
-                    ProductAttributes::query()->create([
-                        'product_id' => $id,
-                        'attribute_id' => $attribute->attribute_id,
-                        'value' => $attribute->value,
-                    ]);
-                }
-                return $product;
+        $data = ProductDTO::toArray($request->validated());
+        $product = $this->productRepository->updateProduct($id, $data);
+        if ($request->hasFile('images')) {
+            $images = (new ProductDTO())->uploadImage($request->file('images'), $product->id);
+            $product->images()->createMany($images);
+        }
+        foreach (json_decode($request->attribute) as $attribute) {
+            ProductAttributes::query()->updateOrCreate([
+                'product_id' => $id,
+                'attribute_id' => $attribute->attribute_id,
+                'value' => $attribute->value,
+            ]);
+        }
+
+        return $product;
 //        } catch (\Exception $ex) {
 //            DB::rollback();
 //            return response()->json(['error' => $ex->getMessage()], 500);

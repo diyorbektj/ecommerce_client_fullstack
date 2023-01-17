@@ -1,6 +1,6 @@
 <template>
     <header class="bg-green-600 text-white w-full h-auto sticky top-0 z-10">
-        <div class="flex justify-between max-w-screen-xl mx-auto text-[1.10rem]">
+        <div class="flex justify-between w-full max-w-screen-xl mx-auto text-[1.10rem]">
             <div class="flex items-center">
                 <router-link class="font-bold text-2xl py-3" to="/">Ecommerce</router-link>
                 <button @click="catalog_func" class="bg-white flex items-center  text-green-600 p-1 ml-6 rounded" form="">
@@ -10,6 +10,7 @@
                     <p>Каталог</p>
                 </button>
             </div>
+
 
             <div class="flex items-center py-1">
                 <div class="search">
@@ -35,7 +36,7 @@
                     </div>
                 </div>
                 <router-link to="/myfavorites">
-                    <div class="mx-4 relative"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <div class="mr-3 relative"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
                         <div v-if="favoriteUser > 0" class="absolute top-[-6px] right-[-6px] bg-red-500 min-w-[1.25rem] h-5 flex justify-center items-center rounded-full p-1">{{favoriteUser}}</div>
@@ -43,7 +44,7 @@
                 </router-link>
 
                 <router-link to="/mybasket">
-                    <div class="ml-3 mr-5 relative"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <div class="ml-1 mr-3 relative"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                         <div v-if="cartProducts > 0" class="absolute top-[-8px] right-[-6px] bg-red-500 min-w-[1.25rem] h-5 flex justify-center items-center rounded-full p-1">{{ cartProducts }}</div>
@@ -76,6 +77,7 @@
                 </div>
             </div>
 
+
         </div>
         <div class="search-lg flex justify-between px-1">
             <div class="mx-1 relative py-2.5">
@@ -92,7 +94,7 @@
                         <router-link class="bg-white hover:bg-gray-300 hover:w-full hover h-auto" :to="`/product/`+product.id">
                             <div class="flex text-sm border-b border-gray-300 py-3">
                                 <img class="w-12 h-12" :src="product.image" :alt="product.name">
-                                <p class="px-2">{{product.name}} test</p>
+                                <div class="px-2">{{product.name}}</div>
                             </div>
                         </router-link>
                     </div>
@@ -186,6 +188,7 @@ header{
     .search,p{
         position: absolute;
         top: -123132px;
+        left: -123123244px;
     }
     header{
         padding-left: 6px;

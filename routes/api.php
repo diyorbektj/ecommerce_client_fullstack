@@ -95,4 +95,4 @@ Route::controller(\App\Http\Controllers\SubCategoryController::class)->prefix('s
     Route::delete('/{id}', 'destroy');
 });
 
-Route::get("/generate-guid", [\App\Http\Controllers\GuidController::class, 'generate']);
+Route::get('/generate-guid', [\App\Http\Controllers\GuidController::class, 'generate']);

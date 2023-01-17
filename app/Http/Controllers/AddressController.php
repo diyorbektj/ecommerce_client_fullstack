@@ -24,7 +24,7 @@ class AddressController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param AddressRequest $request
+     * @param  AddressRequest  $request
      * @return JsonResponse
      */
     public function store(AddressRequest $request)

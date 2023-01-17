@@ -50,7 +50,7 @@ class BasketController extends Controller
                 'product_image' => $product->image->path,
                 'quantity' => 1,
                 'price' => $product->price,
-                'guid' => $request->guid
+                'guid' => $request->guid,
             ]);
         }
 

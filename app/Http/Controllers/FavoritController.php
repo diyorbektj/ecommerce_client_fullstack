@@ -48,7 +48,7 @@ class FavoritController extends Controller
             ->where('guid', $request->guid)
             ->where('product_id', $request->product_id)
             ->first();
-        if (!$favorite) {
+        if (! $favorite) {
             $favorite = Favorit::query()->create([
                 'guid' => $request->guid ?? 'test',
                 'user_id' => auth('sanctum')->id() ?? null,

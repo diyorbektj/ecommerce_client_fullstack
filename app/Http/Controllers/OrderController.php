@@ -56,7 +56,7 @@ class OrderController extends Controller
             'guid' => $request->guid,
             'fullname' => $request->fullname,
             'phone_number' => $request->phone_number,
-            'country' => "Tajikistan",
+            'country' => 'Tajikistan',
             'city' => $request->city,
             'street' => $request->street,
         ]);
