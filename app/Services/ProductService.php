@@ -46,7 +46,7 @@ class ProductService
         }
         $productAttributes = ProductAttributes::query()->where('product_id', $product->id);
         foreach (json_decode($request->attribute) as $attribute) {
-            $productAttributes->where('attribute_id', $attribute->attribute_id)->update([
+            $productAttributes->where('attribute_id', $attribute->attribute_id)->create([
                 'product_id' => $product->id,
                 'attribute_id' => $attribute->attribute_id,
                 'value' => $attribute->value,
